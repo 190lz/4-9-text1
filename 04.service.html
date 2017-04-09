@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <div ng-app="myapp" ng-controller="newcontroller">
+        <div ng-bind="name" ng-mod></div>
+        <div >{{noew.name}}</div>
+        <!-- 下面的并不能输出-->
+    </div>
+</body>
+<script src="./libs/angular.js"></script>
+<script>
+    angular.module('service',[]).service('noew',[function(){
+        this.name='xiaoming'
+    }])
+    angular.module('myapp',['service'])
+       .controller('newcontroller',['$scope','noew',function($scope,noew){
+            console.log(noew.name);
+            $scope.name='5555'
+        }])
+</script>
+</html>
