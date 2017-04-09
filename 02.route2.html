@@ -15,22 +15,26 @@
 <script src="./libs/angular.js"></script>
 <script src="./libs/angular-route.js"></script>
 <script>
-    angular.module('myapp',['ngRoute']).config(['$routeProvider',function($routeProvider){
-        $routeProvider.when('/:name?',{
-            template:'<div>{{msg}}</div>',
-            controller:'newcontroller'
-        }).otherwise({
-            redirectTo:'/baidu'
-        })
-    }]).controller('newcontroller',[
-        '$scope',
-        '$routeParams',
-        function($scope,$routeParams){
-        $scope.data={
-            ali:'四楼',
-            baidu:'五楼'
-        }
-            $scope.msg="你要去的地方是"+$scope.data[$routeParams.name]
-    }])
+    angular.module('myapp',['ngRoute'])
+        .config(['$routeProvider',function($routeProvider){
+            $routeProvider
+               .otherwise({
+                    redirectTo:'/baidu'
+               })
+               .when('/:name?',{
+                    template:'<div>{{msg}}</div>',
+                    controller:'newcontroller'
+               })
+        }])
+        .controller('newcontroller',[
+            '$scope',
+            '$routeParams',
+            function($scope,$routeParams){
+            $scope.data={
+                ali:'四楼',
+                baidu:'五楼'
+            }
+                $scope.msg="你要去的地方是"+$scope.data[$routeParams.name]
+        }])
 </script>
 </html>
