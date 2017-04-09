@@ -5,6 +5,41 @@
     <title></title>
 </head>
 <body>
+    <div ng-app="myapp">
+        <a href="#/ali">132</a>
+        <div ng-view>
 
+        </div>
+    </div>
 </body>
+<script src="./libs/angular.js"></script>
+<script src="./libs/angular-route.js"></script>
+<script>
+    angular.module('myapp',['ngRoute']).config(['$routeProvider',function($routeProvider){
+//        首先我们这里用到了路由，路由的原理就是通过锚点的改变来变化内容的
+//        这个里面就是要告诉angular，当。。。的时候执行什么，首先要通过$touteProvider调用when方法
+        $routeProvider.when('/:name?',{
+//           1. 这里的/ali,为什么是字符串，因为在锚点变化的时候会在url上面最后的变化，这部分就是变化的部分，就是字符串            template:"<div>123</div>",
+//            2.不能让这里写死，如果是写死的话，就会造成单一，但是怎么把它不写死呢，用：号就可以了，：后面跟一个变量名，这个变量名会保存当前的变化的部分，并且这个变量名会保存在后面的$routeParama里面
+//            template,就是，锚点变化后，变化的部分与/ali匹配，然后，会出现template的内容
+//            还可以传入控制器
+            template:'<div>{{msg}}</div>',
+            controller:'demoController'
+        }).controller('demoController',[
+            '$scope',
+            '$routeParams',
+            function($scope,$routeParams){
+//            $routeParams中包含的是路由的参数和值
+//            现在我们开始自定义一组数据
+                $scope.data={
+                    baidu:'四楼',
+                    ali:'五楼',
+                }
+                $scope.msg="你要的公司在"+$scope.data[$routeParams.name]
+        }]).otherwise({
+//            就是当锚点没有任何变化的时候，让锚点的指向指向这个
+            redirectTo:'/ali'
+        })
+    }])
+</script>
 </html>
